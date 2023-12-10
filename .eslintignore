@@ -1,0 +1,4 @@
+dist/
+bin/
+commitlint.config.js
+tsup.config.ts
