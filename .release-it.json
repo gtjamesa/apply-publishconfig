@@ -1,0 +1,9 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}"
+  },
+  "npm": {
+    "ignoreVersion": true,
+    "publish": false
+  }
+}
