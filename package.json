@@ -1,6 +1,7 @@
 {
   "name": "apply-publishconfig",
   "version": "1.0.0",
+  "license": "MIT",
   "main": "dist/index.js",
   "bin": {
     "apply-publishconfig": "bin/cli.js"

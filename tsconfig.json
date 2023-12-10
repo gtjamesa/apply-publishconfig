@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "dist",
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "noImplicitAny": false
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "bin", "node_modules"]

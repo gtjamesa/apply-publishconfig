@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
+import {log} from './log';
 
 async function main() {
   const baseDir = process.argv.length > 2 ? process.argv[2] : process.cwd();
@@ -13,20 +14,19 @@ async function main() {
 
   const {name, version, publishConfig} = packageJson;
 
-  console.log(`Processing ${name}@${version}`);
+  log(`Processing ${name}@${version}`);
 
   if (!publishConfig) {
-    console.log('No publishConfig found in package.json');
+    log('No publishConfig found in package.json');
     return;
   }
 
-  console.log('Applying publishConfig to package.json');
+  log('Applying publishConfig to package.json');
 
   packageJson.main = publishConfig.main ?? packageJson.main;
   packageJson.exports = publishConfig.exports ?? packageJson.exports;
   delete packageJson.publishConfig;
 
-  // console.log(packageJson);
   await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
 }
 
