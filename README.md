@@ -5,14 +5,34 @@
 
 > Quickly apply a publishConfig into a dependency package.json for deployment
 
-After struggling building a Node.js app with Turborepo [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages), I decided to hack together a solution that will apply a package's [`publishConfig`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#publishconfig). I found a [PR](https://github.com/pnpm/pnpm/issues/6693) that suggests that this feature is implemented into [`pnpm deploy`](https://pnpm.io/cli/deploy), but it wasn't working on my end.
+## Overview
 
-I have built this with Turborepo in mind, but there's no reason why it cannot also be used in other contexts.
+This package will apply a [`publishConfig`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#publishconfig) in-place to a project. I have thrown this solution together to build Node server applications with Turborepo [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages), whilst maintaining the full local development experience. I found a [PR](https://github.com/pnpm/pnpm/issues/6693) that suggests that this feature is implemented into [`pnpm deploy`](https://pnpm.io/cli/deploy), but it wasn't working on my end. _This was built with Turborepo in mind, but there's no reason why it cannot also be used in other contexts._
 
 Related discussions:
 
 - https://github.com/vercel/turbo/discussions/4509
 - https://github.com/vercel/turbo/discussions/6751
+
+Running the script will edit the internal package's `package.json` in-place and will apply the `publishConfig`. Supported fields include `main` and `exports`
+
+```diff
+diff --git a/package.json b/package.json
+index f3df0d5..a49f857 100644
+--- a/package.json
++++ b/package.json
+@@ -3,7 +3,7 @@
+   "version": "1.0.0",
+-  "main": "./src/index.ts",
++  "main": "./dist/index.js",
+   "types": "./src/index.ts",
+   "scripts": {
+     "build": "tsup src/index.ts",
+@@ -16,9 +16,6 @@
+-  "publishConfig": {
+-    "main": "./dist/index.js"
+-  },
+```
 
 ## Usage
 
@@ -22,7 +42,7 @@ Install the package using your package manager:
 $ pnpm add -D apply-publishconfig
 ```
 
-Add a script to your dependency's `package.json` with a `publishConfig`:
+Add a script to your internal package's `package.json` with a `publishConfig`:
 
 ```json
 "main": "./src/index.ts",
@@ -41,7 +61,6 @@ Add a pipeline to your root `turbo.json`:
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    ...
     "publish:apply": {
       "cache": false
     }
