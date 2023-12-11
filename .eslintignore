@@ -1,6 +1,5 @@
 dist/
 bin/
-commitlint.config.js
-tsup.config.ts
 .eslintcache
-release.config.js
+*.config.ts
+*.config.js

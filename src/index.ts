@@ -3,14 +3,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import {log} from './log';
+import type {PackageJson} from './types';
+import {applyConfig} from './apply-config';
 
 async function main() {
   const baseDir = process.argv.length > 2 ? process.argv[2] : process.cwd();
   const packagePath = path.resolve(baseDir, './package.json');
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const packageJson: PackageJson = await fs
-    .readFile(packagePath, 'utf-8')
-    .then(JSON.parse);
+  const packageJson: PackageJson = await readPackageJson(packagePath);
 
   const {name, version, publishConfig} = packageJson;
 
@@ -23,23 +22,16 @@ async function main() {
   }
 
   log('Applying publishConfig to package.json');
-
-  packageJson.main = publishConfig.main ?? packageJson.main;
-  packageJson.exports = publishConfig.exports ?? packageJson.exports;
-  delete packageJson.publishConfig;
-
-  await fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2));
+  const modifiedPackageJson = applyConfig(packageJson);
+  await fs.writeFile(packagePath, JSON.stringify(modifiedPackageJson, null, 2));
 }
 
-main().catch(console.error);
-
-interface PackageJson {
-  name: string;
-  version: string;
-  main?: string;
-  exports?: Record<string, string>;
-  publishConfig?: {
-    main?: string;
-    exports?: Record<string, string>;
-  };
+async function readPackageJson(packagePath: string): Promise<PackageJson> {
+  const file = await fs.readFile(packagePath, 'utf-8');
+  return JSON.parse(file) as PackageJson;
 }
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
