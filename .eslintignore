@@ -3,3 +3,4 @@ bin/
 commitlint.config.js
 tsup.config.ts
 .eslintcache
+release.config.js
