@@ -42,5 +42,10 @@
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
     "*.{js,jsx,ts,tsx,css,md}": "prettier --write"
   },
-  "packageManager": "pnpm@8.12.0"
+  "packageManager": "pnpm@8.12.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gtjamesa/apply-publishconfig.git"
+  },
+  "homepage": "https://github.com/gtjamesa/apply-publishconfig"
 }
