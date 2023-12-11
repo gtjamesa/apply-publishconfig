@@ -2,6 +2,8 @@
 
 [![NPM version](https://img.shields.io/npm/v/apply-publishconfig.svg?style=flat)](https://npmjs.org/package/apply-publishconfig)
 [![NPM downloads](https://img.shields.io/npm/dm/apply-publishconfig.svg?style=flat)](https://npmjs.org/package/apply-publishconfig)
+![Release Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/gtjamesa/apply-publishconfig/release.yml)
+![Tests Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/gtjamesa/apply-publishconfig/tests.yml?label=tests)
 
 > Quickly apply a publishConfig into a dependency package.json for deployment
 
