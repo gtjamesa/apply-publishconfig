@@ -7,7 +7,7 @@
 
 ## Overview
 
-This package will apply a [`publishConfig`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#publishconfig) in-place to a project. I have thrown this solution together to build Node server applications with Turborepo [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages), whilst maintaining the full local development experience. I found a [PR](https://github.com/pnpm/pnpm/issues/6693) that suggests that this feature is implemented into [`pnpm deploy`](https://pnpm.io/cli/deploy), but it wasn't working on my end. _This was built with Turborepo in mind, but there's no reason why it cannot also be used in other contexts._
+This package will apply a [`publishConfig`](https://docs.npmjs.com/cli/v10/configuring-npm/package-json#publishconfig) in-place to a project. I have thrown this solution together to build Node server applications with Turborepo [internal packages](https://turbo.build/repo/docs/handbook/sharing-code/internal-packages), whilst maintaining the full local development experience. I found a [PR](https://github.com/pnpm/pnpm/pull/6943) that suggests that this feature is implemented into [`pnpm deploy`](https://pnpm.io/cli/deploy), but it wasn't working on my end. _This was built with Turborepo in mind, but there's no reason why it cannot also be used in other contexts._
 
 Related discussions:
 
