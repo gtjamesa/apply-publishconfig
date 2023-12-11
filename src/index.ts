@@ -14,6 +14,7 @@ async function main() {
 
   const {name, version, publishConfig} = packageJson;
 
+  // TODO: Add CLI options to disable logging
   log(`Processing ${name}@${version}`);
 
   if (!publishConfig) {
