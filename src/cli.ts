@@ -12,6 +12,7 @@ export const program = new Command()
     'Dry run, do not write to package.json (implies "--ci")',
     false,
   )
+  .option('-q, --quiet', 'Do not perform any logging', false)
   .option('-p, --path <path>', 'Path to package.json', process.cwd());
 
 program.parse();

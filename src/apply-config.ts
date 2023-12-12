@@ -15,7 +15,6 @@ export function applyConfig(packageJson: PackageJson): PackageJson {
   const props = Object.entries(publishConfig);
   for (const [key, value] of props) {
     // We want to assign anything here
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     packageJson[key] = value;
   }
 
