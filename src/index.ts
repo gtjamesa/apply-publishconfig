@@ -1,29 +1,44 @@
 #!/usr/bin/env node
 import fs from 'node:fs/promises';
-import path from 'node:path';
 import process from 'node:process';
-import {log} from './log';
+import {Logger} from './log';
 import type {PackageJson} from './types';
 import {applyConfig} from './apply-config';
+import {isCI} from 'ci-info';
+import {Options, options} from './cli';
+import {resolvePath} from './path-resolver';
 
-async function main() {
-  const baseDir = process.argv.length > 2 ? process.argv[2] : process.cwd();
-  const packagePath = path.resolve(baseDir, './package.json');
+async function main(options: Options) {
+  const logger = new Logger(options.quiet);
+
+  if (options.ci && !isCI) {
+    logger.log('Skipping because "--ci" is set and not in a CI environment');
+    return;
+  }
+
+  const packagePath = resolvePath(options.path);
   const packageJson: PackageJson = await readPackageJson(packagePath);
 
   const {name, version, publishConfig} = packageJson;
 
-  // TODO: Add CLI options to disable logging.
-  log(`Processing ${name}@${version}`);
+  logger.log(`Processing ${name}@${version}`);
 
   if (!publishConfig) {
-    log('No publishConfig found in package.json');
+    logger.log('No publishConfig found in package.json');
     return;
   }
 
-  log('Applying publishConfig to package.json');
+  logger.log('Applying publishConfig to package.json');
   const modifiedPackageJson = applyConfig(packageJson);
-  await fs.writeFile(packagePath, JSON.stringify(modifiedPackageJson, null, 2));
+
+  if (options.dryRun) {
+    console.log(modifiedPackageJson);
+  } else {
+    await fs.writeFile(
+      packagePath,
+      JSON.stringify(modifiedPackageJson, null, 2),
+    );
+  }
 }
 
 async function readPackageJson(packagePath: string): Promise<PackageJson> {
@@ -31,7 +46,7 @@ async function readPackageJson(packagePath: string): Promise<PackageJson> {
   return JSON.parse(file) as PackageJson;
 }
 
-main().catch(err => {
+main(options).catch(err => {
   console.error(err);
   process.exit(1);
 });
