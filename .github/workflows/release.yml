@@ -4,7 +4,7 @@ on:
     branches:
       - main
   repository_dispatch:
-    types: [ semantic-release ]
+    types: [semantic-release]
 
 permissions:
   contents: read # for checkout
@@ -13,7 +13,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        node: [ 18, 20 ]
+        node: [18, 20]
     uses: ./.github/workflows/tests.yml
     with:
       node-version: ${{ matrix.node }}
