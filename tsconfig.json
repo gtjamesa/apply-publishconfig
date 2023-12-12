@@ -1,10 +1,21 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
+    "target": "es2022",
+    "lib": ["es2022"],
     "module": "esnext",
     "moduleResolution": "bundler",
-    "noImplicitAny": false
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "noUncheckedIndexedAccess": true,
+    "declaration": true,
+    "noEmit": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "bin", "node_modules"]
