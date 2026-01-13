@@ -27,10 +27,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node-version }}
+          node-version-file: '.nvmrc'
           cache: 'pnpm'
 
       - name: Install NPM Dependencies
-        shell: bash
         run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
