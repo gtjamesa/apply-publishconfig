@@ -10,10 +10,7 @@ on:
         required: false
         type: number
         description: 'Node.js version to use for the test run'
-        default: 20
-
-env:
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        default: 24
 
 jobs:
   jest:
@@ -24,14 +21,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - uses: pnpm/action-setup@v4
 
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ inputs.node-version }}
           cache: 'pnpm'
 
       - name: Install NPM Dependencies
